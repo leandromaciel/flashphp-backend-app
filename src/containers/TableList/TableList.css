@@ -1,0 +1,8 @@
+.react-bootstrap-table table {
+    table-layout: auto;
+}
+
+.btn-margin {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
