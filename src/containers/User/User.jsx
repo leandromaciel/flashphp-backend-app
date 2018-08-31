@@ -10,27 +10,28 @@ class User extends Component {
         
         this.state = {
             urlList: this.props.baseUrl+'/usuario',
-            serverResponse: [],
             urlEdit: '/usuario/editar',
+            urlSaveData: this.props.baseUrl+'/usuario/editar',
             urlExportCSV: this.props.baseUrl+'/usuario/exportar-csv',
             csvFileName: 'listagem-de-usuarios',
             csvHeader: [{
                 dataField: 'id',
                 text: 'ID Usuario',
                 sort: true
-              }, {
+            }, {
                 dataField: 'login',
                 text: 'Login',
                 sort: true
-              }, {
+            }, {
                 dataField: 'created_at',
                 text: 'Criado em',
                 sort: true
-              }, {
+            }, {
                 dataField: 'updated_at',
                 text: 'atualizado em',
                 sort: true
-              }]
+            }],
+            serverResponse: []
         }
     }
 
@@ -87,11 +88,11 @@ class User extends Component {
                     :
                     this.state.serverResponse.map((userData, indice) => 
                         <UserForm 
-                            _id={indice}
+                            key={userData.id}
+                            urlSaveData={this.state.urlSaveData}
                             data={userData} />
                     )
                 }
-                mas que cralho
             </Fragment>
         )
     }
