@@ -1,128 +1,86 @@
-import React, { Component, Fragment } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-import "./Login.css";
-import MainMenu from "../MainMenu/MainMenu";
+import { Container, Row, Col, Input, Button, Fa, Card, CardBody, ToastContainer, toast } from 'mdbreact';
+
+
+import * as userActions from '../../actions/user'
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props)
 
-    this.state = {
-      userLogin: "",
-      userPassword: "",
-      serverResponse: {
-        authorized: false,
-        error_message: false
-      }
-    }
-
-    if (this.props.logout) {
-      this.handleLogout()
-    }
-  }
-
-  handleLogout = () => {
-    localStorage.removeItem('CSRF_TOKEN_NAME')
-    localStorage.removeItem('CSRF_TOKEN_VALUE')
-    localStorage.removeItem('CREDENTIALS')
-    localStorage.removeItem('USER_LOGIN')
-
-    this.props.history.push('/')
-  }
-
-  validateForm() {
-    return this.state.userLogin.length > 0 && this.state.userPassword.length > 0;
-  }
-
-  handleChange = event => {
-    this.setState({
-      [event.target.id]: event.target.value
-    });
-  }
-
-  handleSubmit = event => {
-    event.preventDefault();
-
-    const loginData = {
-      userLogin: this.state.userLogin,
-      userPassword: this.state.userPassword
-    }
-
-    fetch(this.props.baseUrl+'/usuario/entrar', {
-        method: 'POST',
-        body: JSON.stringify(loginData)
-    }).then((response) => {
-        if ( response.status === 200 ) {
-          return response.json();
+        this.state = {
+            userLogin: '',
+            userPassword: ''
         }
-    })
-    .then((responseJSON) => {
+    }
+
+    handleChange = (field) => {
         this.setState({
-          serverResponse: responseJSON
+            [field.target.name]: field.target.value,
         })
+    }
 
-        this.handleServerResponse()
-        this.props.history.push('/')
-    })
-    .catch((responseError) => {
-        this.setState({
-            error: responseError
-        })
-    })
-  }
+    handleSubmit = (event) => {
+        event.preventDefault()
+        this.props.requestUserLogin(this.state)
+    }
 
-  handleServerResponse = () => {
-    if (this.state.serverResponse.AUTHORIZED) {
-      localStorage.setItem('CSRF_TOKEN_VALUE', this.state.serverResponse.CSRF_TOKEN_VALUE)
-      localStorage.setItem('CSRF_TOKEN_NAME', this.state.serverResponse.CSRF_TOKEN_NAME)
-      localStorage.setItem('CREDENTIALS', this.state.serverResponse.CREDENTIALS)
-      localStorage.setItem('USER_LOGIN', this.state.serverResponse.USER_LOGIN)
-      return true
-    } 
-  }
+    handleMessage = () => {
+       toast.error(this.props.user.error)
+    }
 
-  render() {
-    return (
-      <Fragment>
-        <MainMenu />
-        <div className="Login">
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup controlId="userLogin" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
-              <FormControl
-                autoFocus
-                type="email"
-                value={this.state.userLogin}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="userPassword" bsSize="large">
-              <ControlLabel>Senha</ControlLabel>
-              <FormControl
-                value={this.state.userPassword}
-                onChange={this.handleChange}
-                type="password"
-              />
-              { 
-                this.state.serverResponse.error_message 
-                ? <div>{this.state.serverResponse.error_message}</div>
-                : ''
-              }
-            </FormGroup>
-            <Button
-              className='btn-default'
-              block
-              bsSize="large"
-              disabled={!this.validateForm()}
-              type="submit"
-            >
-              Entrar
-            </Button>
-          </form>
+    componentDidUpdate() {
+        if (this.props.user.credentials.AUTHORIZED) {
+            this.props.history.push('/usuario')
+        }
+    }
+
+    render() {
+        return (
+        <div>
+            <Container className="margin-top-navbar-login">
+                <Row center>
+                    <Col md="6">
+                        <Card>
+                            <CardBody>
+                                <form onSubmit={this.handleSubmit}>
+                                    <p className="h4 text-center py-4">Bem vindo!</p>
+                                    <div className="grey-text">
+                                        <Input label="Email" name="userLogin" onChange={this.handleChange} icon="envelope" group type="email" validate error="wrong" success="right"/>
+                                        <Input label="Senha" name="userPassword" onChange={this.handleChange} icon="lock" group type="password" validate/>
+                                    </div>
+                                    <div className="text-center py-4 mt-3">
+                                        <Button color="indigo" type="submit">Entrar <Fa icon="sign-in" /></Button>
+                                    </div>
+                                    <div className="text-center py-4 mt-3">
+                                        { this.props.user.loading && <Fa icon="spinner" pulse size="3x" className="indigo-text" fixed/> }
+                                        { this.props.user.error && this.handleMessage() }
+                                    </div>
+                                </form>
+                            </CardBody>
+                        </Card>
+                    </Col>
+                </Row>
+                <ToastContainer
+                    hideProgressBar={true}
+                    newestOnTop={true}
+                    autoClose={2000}
+                />
+            </Container>
+            
         </div>
-      </Fragment>
-    )
-  }
+        )
+    }
 }
-export default withRouter(Login)
+
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(userActions, dispatch)
+
+const mapStateToProps = state => ({
+    user: state.user
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login))

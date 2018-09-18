@@ -1,26 +1,30 @@
-import React, { Component, Fragment } from "react";
-import "./Dashboard.css";
-import MainMenu from "../MainMenu/MainMenu";
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Link } from 'react-router-dom'
 
-export default class Dashboard extends Component {
-  constructor(props) {
-    super(props)
+class Dashboard extends Component {
+    constructor(props) {
+        super(props)
 
-    this.state = {
-      //listIds: localStorage.getItem('userListIds').split(",").map(Number)
+        if ( typeof this.props.user.credentials.AUTHORIZED === 'undefined' ) {
+            this.props.history.push('/')
+        }
+
+        console.log(this.props)
     }
-  }
-  
-  render() {
-    return (
-      <Fragment>
-        <MainMenu />
-        <div className="Dashboard">
-          <div className="lander">
-            <h1>FlashCommerce</h1>
-          </div>
-        </div>
-      </Fragment>
-    )
-  }
+    
+    render() {
+        return (
+            <div>
+                <Link to='/usuario'>usuarios</Link>
+            </div>
+        )
+    }
 }
+
+const mapStateToProps = state => ({
+    user: state.user,
+    dashboard: state.dashboard
+})
+
+export default withRouter(connect(mapStateToProps)(Dashboard))

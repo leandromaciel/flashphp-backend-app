@@ -1,25 +1,20 @@
 import React, { Component } from 'react'
-import Routes from './routes/index.jsx'
-
-import './App.css'
-
+import { BrowserRouter as Router, Switch } from 'react-router-dom'
+import Routes from './routes/index'
+import Navigation from './containers/Navigation/Navigation'
 
 class App extends Component {
-
-  constructor() {
-    super()
-
-    this.state = {
-      baseUrl: 'http://localhost/flashphp/public/backend'
-    }
-  }
-
   render() {
     return (
-      <div className="App container">
-        <Routes baseUrl={this.state.baseUrl} />
+      <div className="App">
+        <Navigation />
+        <Router>
+          <Switch>
+            <Routes />
+          </Switch>
+        </Router>
       </div>
-    );
+    )
   }
 }
 

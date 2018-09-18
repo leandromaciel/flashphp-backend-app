@@ -1,44 +1,26 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import Dashboard from '../containers/Dashboard/Dashboard'
-import Login from '../containers/Login/Login'
 import User from '../containers/User/User'
-import AccessDenied from '../containers/AccessDenied'
-import NotFound from '../containers/NotFound'
+import Login from '../containers/Login/Login'
+import Dashboard from '../containers/Dashboard/Dashboard'
 
+class Routes extends Component {
 
-class PrivateRoute extends Component {
-
-    handleCredentials = () => {
-        return true
-    }
-
-    render () {
-
-        if (localStorage.getItem('CSRF_TOKEN_VALUE')) {
-            if (this.handleCredentials()) {
-                return <Route path={this.props.path} component={this.props.component} />
-            } else {
-                return <Route path='/acess-denied' component={AccessDenied} />
-            }
-        } else {
-            return <Redirect to="/login" />
-        }
-    }
-}
-
-export default class Routes extends Component {
-    render () {
+    render() {
         return (
-            <Switch>
-                <PrivateRoute path='/' exact component={() => <Dashboard />} />
-                <PrivateRoute path='/usuario' exact component={() => <User baseUrl={this.props.baseUrl} action='list' />} />
-                <PrivateRoute path='/usuario/editar' exact component={() => <User baseUrl={this.props.baseUrl} action='edit' />} />
-                <Route path='/login' component={() => <Login baseUrl={this.props.baseUrl}/>} />
-                <Route path='/logout' component={() => <Login baseUrl={this.props.baseUrl} logout={true}/>} />
-                <Route component={NotFound} />
-            </Switch>
+            <div>
+                <Route exact path='/' component={Login} />
+                <Route exact path='/usuario' component={User} />
+                <Route exact path='/dashboard' component={Dashboard} />
+            </div>
         )
     }
 }
+    
+const mapStateToProps = state => ({
+    state
+}) 
+
+export default connect(mapStateToProps)(Routes)

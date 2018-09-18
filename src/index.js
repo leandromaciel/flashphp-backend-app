@@ -1,15 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
-import App from './App.jsx';
+import { Provider } from 'react-redux'
+import { store, history }  from './store/index'
+import { ConnectedRouter } from 'connected-react-router'
+
+import 'font-awesome/css/font-awesome.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'mdbreact/dist/css/mdb.css'
+
+import App from './App';
+import './App.css';
+
 import registerServiceWorker from './registerServiceWorker';
 
-import './index.css';
-
-
 ReactDOM.render(
-    <Router>
-        <App />
-    </Router>, 
+    <Provider store={store}>
+        <ConnectedRouter history={history}>
+            <App />
+        </ConnectedRouter>
+    </Provider>, 
     document.getElementById('root'));
 registerServiceWorker();
