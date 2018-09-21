@@ -2,12 +2,10 @@ import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
+import * as userActions from '../../actions/user'
 import TableList from '../TableList/TableList'
 
-import * as userActions from '../../actions/user'
-
-
-class User extends Component {
+class UserList extends Component {
     constructor(props) {
         super(props)
 
@@ -55,26 +53,9 @@ class User extends Component {
 
     render() {
         return (
-<<<<<<< HEAD:src/components/User/User.jsx
-            <Fragment>
-                {
-                    this.props.action === 'list'
-                    ?
-                    <TableList configData={this.state} />
-                    :
-                    this.state.serverResponse.map((userData, indice) => 
-                        <UserForm 
-                            key={userData.id}
-                            urlSaveData={this.state.urlSaveData}
-                            data={userData} />
-                    )
-                }
-            </Fragment>
-=======
             <div>
                 {this.props.user.list && <TableList configData={this.state} data={this.props.user.list} />}    
             </div>
->>>>>>> 5311ae2bc8d5bbeab5bf93767b88d8c262c1910f:src/containers/User/User.jsx
         )
     }
 }
@@ -86,4 +67,4 @@ const mapStateToProps = state => ({
     user: state.user
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(UserList))

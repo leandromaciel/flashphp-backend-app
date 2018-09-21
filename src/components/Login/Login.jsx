@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { Container, Row, Col, Input, Button, Fa, Card, CardBody, ToastContainer, toast } from 'mdbreact';
 
-
 import * as userActions from '../../actions/user'
 
 class Login extends Component {
@@ -15,6 +14,16 @@ class Login extends Component {
             userLogin: '',
             userPassword: ''
         }
+
+        if (this.props.action === 'logout') {
+            this.handleLogout()
+        }
+    }
+
+    handleLogout = () => {
+        localStorage.removeItem('USER_LOGIN')
+        localStorage.removeItem('CSRF_TOKEN_VALUE')
+        this.props.history.push('/')
     }
 
     handleChange = (field) => {
@@ -29,12 +38,14 @@ class Login extends Component {
     }
 
     handleMessage = () => {
-       toast.error(this.props.user.error)
+        toast.error(this.props.user.error, {
+            autoClose: 3000
+          });
     }
 
     componentDidUpdate() {
         if (this.props.user.credentials.AUTHORIZED) {
-            this.props.history.push('/usuario')
+            this.props.history.push('/painel')
         }
     }
 
@@ -62,15 +73,15 @@ class Login extends Component {
                                 </form>
                             </CardBody>
                         </Card>
+
+                        <ToastContainer
+                            hideProgressBar={true}
+                            newestOnTop={true}
+                            autoClose={5000}
+                        />
                     </Col>
                 </Row>
-                <ToastContainer
-                    hideProgressBar={true}
-                    newestOnTop={true}
-                    autoClose={2000}
-                />
             </Container>
-            
         </div>
         )
     }

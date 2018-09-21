@@ -3,10 +3,7 @@ import BootstrapTable from 'react-bootstrap-table-next'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 
-<<<<<<< HEAD:src/components/TableList/TableList.jsx
-=======
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
->>>>>>> 5311ae2bc8d5bbeab5bf93767b88d8c262c1910f:src/containers/TableList/TableList.jsx
+/* import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'; */
 import './TableList.css'
 
 export default class TableList extends Component {

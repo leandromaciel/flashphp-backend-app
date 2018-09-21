@@ -2,18 +2,21 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-class Dashboard extends Component {
+class Company extends Component {
+    
     render() {
         return (
-            <div className="margin-top-navbar-login">
-                você está no painel
+            <div>
+                Emmpresa na área
             </div>
+            
         )
     }
 }
 
 const mapStateToProps = state => ({
-    dashboard: state.dashboard
+    user: state.user,
+    customer: state.customer
 })
 
-export default withRouter(connect(mapStateToProps)(Dashboard))
+export default withRouter(connect(mapStateToProps)(Company))
