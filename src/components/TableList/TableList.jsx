@@ -1,12 +1,15 @@
 import React, { Component, Fragment } from 'react'
-import { withRouter } from 'react-router-dom'
 import BootstrapTable from 'react-bootstrap-table-next'
 import ToolkitProvider, { Search } from 'react-bootstrap-table2-toolkit'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 
+<<<<<<< HEAD:src/components/TableList/TableList.jsx
+=======
+import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+>>>>>>> 5311ae2bc8d5bbeab5bf93767b88d8c262c1910f:src/containers/TableList/TableList.jsx
 import './TableList.css'
 
-class TableList extends Component {
+export default class TableList extends Component {
     constructor(props) {
         super(props)
 
@@ -37,18 +40,6 @@ class TableList extends Component {
             })
         } else {
             this.state.selected.splice(0, this.state.selected.length)
-        }
-    }
-
-    handleBtnUpdateClick = () => {
-        if (this.state.selected.length >= 1) {
-            this.setState({
-                redirect: true
-            })
-            
-            localStorage.setItem('userListIds', this.state.selected)  
-            
-            this.props.history.push(this.props.configData.urlEdit)
         }
     }
 
@@ -126,7 +117,6 @@ class TableList extends Component {
     }
 
     render() {
-        this.setCsvHeader()
 
         const { SearchBar } = Search
         const columns = this.props.configData.csvHeader
@@ -164,18 +154,18 @@ class TableList extends Component {
             paginationTotalRenderer: customTotal,
             sizePerPageList: [50, 100, 200, 500, 1000] // A numeric array is also available. the purpose of above example is custom the text
         }
-          
+
         return (
             <Fragment>
                 <ToolkitProvider
                     keyField='id'
-                    data={ this.props.configData.serverResponse }
+                    data={ this.props.data }
                     columns={ columns }
                     search
                 >
                     {
                         props => (
-                            <Fragment>
+                            <div className="margin-top-navbar-content">
                                 <h3>Buscar por:</h3>
                                 <SearchBar 
                                     { ...props.searchProps }
@@ -196,7 +186,7 @@ class TableList extends Component {
                                 <br/>
                                 <button className="btn btn-success" onClick={ this.handleBtnUpdateClick }>Alterar selecionados</button>
                                 <br/>
-                            </Fragment>
+                            </div>
                         )
                     }
                 </ToolkitProvider>
@@ -204,5 +194,3 @@ class TableList extends Component {
         )
     }
 }
-
-export default withRouter(TableList)

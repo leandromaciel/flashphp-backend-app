@@ -1,18 +1,27 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import TableList from '../TableList/TableList'
-import UserForm from './UserForm'
+
+import * as userActions from '../../actions/user'
 
 
 class User extends Component {
     constructor(props) {
         super(props)
-        
+
+        if ( typeof this.props.user.credentials.AUTHORIZED === 'undefined' ) {
+            this.props.history.push('/')
+        }
+
+        this.getUserList()
+
         this.state = {
-            urlList: this.props.baseUrl+'/usuario',
+            urlList: this.props.user.baseUrl+this.props.user.listUrlAction,
             urlEdit: '/usuario/editar',
-            urlSaveData: this.props.baseUrl+'/usuario/editar',
-            urlExportCSV: this.props.baseUrl+'/usuario/exportar-csv',
+            urlSaveData: this.props.user.baseUrl+'/usuario/editar',
+            urlExportCSV: this.props.user.baseUrl+'/usuario/exportar-csv',
             csvFileName: 'listagem-de-usuarios',
             csvHeader: [{
                 dataField: 'id',
@@ -31,54 +40,22 @@ class User extends Component {
                 text: 'atualizado em',
                 sort: true
             }],
-            serverResponse: []
         }
     }
 
-    componentWillMount() {
-        let fetchData = {}
+    getUserList = () => {
+        this.props.requestUserList()
+    }
 
-        if (this.props.action === 'list') {
-           fetchData  = {
-                url: this.state.urlList,
-                params: {
-                    method: 'GET'
-                }
-            }
-        } else {
-            const serverData = {
-                listIds: localStorage.getItem('userListIds').split(',')
-            }
-
-            fetchData = {
-                url: this.state.urlExportCSV,
-                params: {
-                    method: 'POST',
-                    body: JSON.stringify(serverData)
-                }
-            }
+    componentDidUpdate() {
+        if (!this.props.user.credentials.AUTHORIZED) {
+            this.props.history.push('/')
         }
-
-        fetch(fetchData.url, fetchData.params)
-        .then((response) => {
-            if ( response.status === 200 ) {
-                return response.json();
-            }
-        })
-        .then((responseJSON) => {
-            this.setState({
-                serverResponse: responseJSON
-            })
-        })
-        .catch((responseError) => {
-            this.setState({
-                error: responseError
-            })
-        })
     }
 
     render() {
         return (
+<<<<<<< HEAD:src/components/User/User.jsx
             <Fragment>
                 {
                     this.props.action === 'list'
@@ -93,8 +70,20 @@ class User extends Component {
                     )
                 }
             </Fragment>
+=======
+            <div>
+                {this.props.user.list && <TableList configData={this.state} data={this.props.user.list} />}    
+            </div>
+>>>>>>> 5311ae2bc8d5bbeab5bf93767b88d8c262c1910f:src/containers/User/User.jsx
         )
     }
 }
 
-export default withRouter(User)
+const mapDispatchToProps = dispatch =>
+    bindActionCreators(userActions, dispatch)
+
+const mapStateToProps = state => ({
+    user: state.user
+})
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(User))

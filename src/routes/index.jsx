@@ -1,14 +1,26 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-import Dashboard from '../components/Dashboard/Dashboard'
-import Login from '../components/Login/Login'
+import User from '../containers/User/User'
+import Login from '../containers/Login/Login'
+import Dashboard from '../containers/Dashboard/Dashboard'
 
-const Routes = () => (
-    <div>
-        <Route exact path='/' component={Dashboard} />
-        <Route exact path='/entrar' component={() => <Login baseUrl={this.props.baseUrl}/>} />
-    </div>
-)
+class Routes extends Component {
 
-export default Routes
+    render() {
+        return (
+            <div>
+                <Route exact path='/' component={Login} />
+                <Route exact path='/usuario' component={User} />
+                <Route exact path='/dashboard' component={Dashboard} />
+            </div>
+        )
+    }
+}
+    
+const mapStateToProps = state => ({
+    state
+}) 
+
+export default connect(mapStateToProps)(Routes)
