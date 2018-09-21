@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
-import MainMenu from '../MainMenu/MainMenu'
 import TableList from '../TableList/TableList'
 import UserForm from './UserForm'
+
 
 class User extends Component {
     constructor(props) {
@@ -80,7 +80,6 @@ class User extends Component {
     render() {
         return (
             <Fragment>
-                <MainMenu />
                 {
                     this.props.action === 'list'
                     ?

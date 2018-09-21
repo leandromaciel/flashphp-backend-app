@@ -1,8 +1,8 @@
-import React, { Component, Fragment } from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import { withRouter } from 'react-router-dom'
-import "./Login.css";
-import MainMenu from "../MainMenu/MainMenu";
+import React, { Component, Fragment } from "react"
+import { Route } from 'react-router'
+import { Container, Row, Col, Input, Button, Fa, Card, CardBody } from 'mdbreact';
+import { Alert } from 'react-bootstrap'
+import NavbarFeatures from "../NavbarFeatures/NavbarFeatures";
 
 class Login extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Login extends Component {
     localStorage.removeItem('CREDENTIALS')
     localStorage.removeItem('USER_LOGIN')
 
-    this.props.history.push('/')
+    return <Route path='/entrar' component={() => <Login baseUrl={this.props.baseUrl}/>} />
   }
 
   validateForm() {
@@ -61,9 +61,7 @@ class Login extends Component {
         this.setState({
           serverResponse: responseJSON
         })
-
         this.handleServerResponse()
-        this.props.history.push('/')
     })
     .catch((responseError) => {
         this.setState({
@@ -78,51 +76,46 @@ class Login extends Component {
       localStorage.setItem('CSRF_TOKEN_NAME', this.state.serverResponse.CSRF_TOKEN_NAME)
       localStorage.setItem('CREDENTIALS', this.state.serverResponse.CREDENTIALS)
       localStorage.setItem('USER_LOGIN', this.state.serverResponse.USER_LOGIN)
-      return true
+      this.history.push('/')
     } 
   }
 
   render() {
     return (
       <Fragment>
-        <MainMenu />
-        <div className="Login">
-          <form onSubmit={this.handleSubmit}>
-            <FormGroup controlId="userLogin" bsSize="large">
-              <ControlLabel>Email</ControlLabel>
-              <FormControl
-                autoFocus
-                type="email"
-                value={this.state.userLogin}
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-            <FormGroup controlId="userPassword" bsSize="large">
-              <ControlLabel>Senha</ControlLabel>
-              <FormControl
-                value={this.state.userPassword}
-                onChange={this.handleChange}
-                type="password"
-              />
-              { 
-                this.state.serverResponse.error_message 
-                ? <div>{this.state.serverResponse.error_message}</div>
-                : ''
-              }
-            </FormGroup>
-            <Button
-              className='btn-default'
-              block
-              bsSize="large"
-              disabled={!this.validateForm()}
-              type="submit"
-            >
-              Entrar
-            </Button>
-          </form>
-        </div>
+        <NavbarFeatures />
+        <Container>
+          <br/>
+          <Row center={true}>
+            <Col md="6">
+              <Card>
+                <CardBody>
+                  <form action="/" onSubmit={this.handleSubmit}>
+                    <p className="h4 text-center py-4">Bem vindo!</p>
+                    <div className="grey-text">
+                      <Input label="Email" icon="envelope" group type="email" id="userLogin" onChange={this.handleChange} validate error="wrong" success="right"/>
+                      <Input label="Senha" icon="lock" group type="password" id="userPassword" onChange={this.handleChange} validate/>
+                    </div>
+                    <div className="text-center py-4 mt-3">
+                      <Button color="amber" type="submit">Entrar&nbsp;<Fa icon="sign-in"/></Button>
+                      {
+                        this.state.serverResponse.error_message
+                        ?
+                        <Alert bsStyle="warning">
+                          <strong>{this.state.serverResponse.error_message}</strong>
+                        </Alert>
+                        :
+                        ''
+                      }
+                    </div>
+                  </form>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </Fragment>
     )
   }
 }
-export default withRouter(Login)
+export default Login

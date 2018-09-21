@@ -4,7 +4,7 @@ export default class AccessDenied extends Component {
   render() {
     return (
       <div>
-        Access is denied
+        Acesso Negado
       </div>
     )
   }
