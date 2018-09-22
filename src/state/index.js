@@ -1,19 +1,17 @@
-const initialState = {
-    user: {
-        baseUrl: 'http://192.168.1.5/flashphp/public/backend',
-        listUrlAction: '/usuario',
-        loginUrlAction: '/usuario/entrar',
-        credentialsUrlAction: '/usuario/validar-credenciais',
-        loading: false,
-        error: false,
-        list: [],
-        credentials: {},
-        error_message: ''
-    },
+import customerState from './customer'
+import userState from './user'
+import dashboardState from './dashboard'
 
-    dashboard: {
-        baseUrl: 'urldeteste'
-    }
+const initialState = {
+    config: {
+        baseUrl: 'http://192.168.1.5/flashphp/public/backend',
+        networkError: false,
+        networkErrorMessage: 'Estamos com falhas na conexão, por favor avise seu administrador.'
+    },
+         
+    user: userState,
+    customer: customerState,
+    dashboard: dashboardState
 }
 
 export default initialState

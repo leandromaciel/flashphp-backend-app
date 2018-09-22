@@ -40,7 +40,7 @@ class Login extends Component {
     handleMessage = () => {
         toast.error(this.props.user.error, {
             autoClose: 3000
-          });
+        })
     }
 
     componentDidUpdate() {
@@ -77,7 +77,6 @@ class Login extends Component {
                         <ToastContainer
                             hideProgressBar={true}
                             newestOnTop={true}
-                            autoClose={5000}
                         />
                     </Col>
                 </Row>

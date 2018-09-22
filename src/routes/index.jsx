@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { Route, withRouter } from 'react-router-dom'
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-
-import * as userActions from '../actions/user'
 
 import User from '../components/User/User'
 import Login from '../components/Login/Login'
@@ -12,10 +9,6 @@ import Customer from '../components/Customer/Customer'
 
 
 class Routes extends Component {
-
-    componentDidMount() {
-        this.props.requestUserCredentials()
-    }
 
     render() {
         return (
@@ -33,11 +26,8 @@ class Routes extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch =>
-    bindActionCreators(userActions, dispatch)
-    
 const mapStateToProps = state => ({
     state
 }) 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Routes))
+export default withRouter(connect(mapStateToProps)(Routes))

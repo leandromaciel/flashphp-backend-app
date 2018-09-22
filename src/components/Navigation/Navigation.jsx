@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Fa, Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
+import { Fa, Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'mdbreact';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { connect } from 'react-redux'
 
@@ -31,17 +31,24 @@ class Navigation extends Component {
                         <Fragment>
                             <Collapse isOpen = { this.state.collapse } navbar>
                                 <NavbarNav left>
-                                    <NavItem>
-                                        <li className="nav-item">
-                                            <a className="nav-link" href="/painel">Home</a>
-                                        </li>
-                                    </NavItem>
+                                    <li className="nav-item">
+                                        <a className="nav-link" href="/painel">Home</a>
+                                    </li>
                                     <NavItem>
                                         <Dropdown>
                                             <DropdownToggle nav caret>Clientes</DropdownToggle>
                                             <DropdownMenu>
                                                 <DropdownItem href="/novo-cliente">Novo</DropdownItem>
                                                 <DropdownItem href="/listar-clientes">Listar</DropdownItem>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                    </NavItem>
+                                    <NavItem>
+                                        <Dropdown>
+                                            <DropdownToggle nav caret>Usuarios</DropdownToggle>
+                                            <DropdownMenu>
+                                                <DropdownItem href="usuario/novo">Novo</DropdownItem>
+                                                <DropdownItem href="/usuario">Listar</DropdownItem>
                                             </DropdownMenu>
                                         </Dropdown>
                                     </NavItem>
@@ -75,7 +82,6 @@ class Navigation extends Component {
 
 const mapStateToProps = state => ({
     user: state.user,
-    dashboard: state.dashboard
 })
 
 export default connect(mapStateToProps)(Navigation)

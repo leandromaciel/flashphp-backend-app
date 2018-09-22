@@ -2,15 +2,30 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
-import Person from './Person'
-import Company from './Company'
+/* import TableList from '../TableList/TableList' */
+import CustomerSelection from './CustomerSelection'
 
 class Customer extends Component {
+
     constructor(props) {
         super(props)
 
         this.state = {
-            customerType: 'person'
+            customerType: 'person',
+            firstName: '',
+            lastName: '',
+            nickName: '',
+            birthDay: '',
+            birthMonth: '',
+            birthYear: '',
+            personalDocument: '',
+            socialSecurity: '',
+            email: '',
+            fixedPhonePrefix: '',
+            fixedPhoneNumber: '',
+            mobilePhonePrefix: '',
+            mobilePhoneNumber: '',
+            isActive: true
         }
     }
 
@@ -22,22 +37,27 @@ class Customer extends Component {
     
     render() {
         return (
-            <div>
-                <form>
-                    <div className="form-group margin-top-navbar-content">
-                        <label htmlFor="selectCustomerType">Escolha o tipo de cliente:</label>
-                        <select className="form-control" id="selectCustomerType" onChange={this.getSelectValue}>
-                            <option value='person'>Pessoa Física</option>
-                            <option value='company'>Pessoa Jurídica</option>
-                        </select>
-                    </div>
-                </form>
-                <div>
-                    {this.state.customerType === 'person' && <Person />}
-                    {this.state.customerType === 'company' && <Company />}
-                </div>
+            <div className="form-group margin-top-navbar-content">
+                {/*this.props.action === 'list' && <TableList />*/}
+                {
+                    this.props.action === 'new' &&
+                    <form>
+                        <div>
+                            <label htmlFor="selectCustomerType">Escolha o tipo de cliente:</label>
+                            <select className="form-control" id="selectCustomerType" onChange={this.getSelectValue}>
+                                <option value='person'>Pessoa Física</option>
+                                <option value='company'>Pessoa Jurídica</option>
+                            </select>
+                        </div>
+                    </form>
+                }
+                {
+                    this.state.customerType === 'person' && 
+                    <form className='needs-validation' onSubmit={this.submitHandler} noValidate>
+                        <Person />
+                    </form>
+                }
             </div>
-            
         )
     }
 }
