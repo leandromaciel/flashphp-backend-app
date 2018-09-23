@@ -12,6 +12,11 @@ class Network extends Component {
                     {this.props.config.networkErrorMessage}
                 </div>
             }
+            {this.props.config.genericError &&
+                <div className="alert alert-danger" role="alert">
+                    {this.props.config.genericErrorMessage}
+                </div>
+            }
         </div>
     )
   }

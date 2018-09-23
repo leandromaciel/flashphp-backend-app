@@ -8,6 +8,7 @@ export default function* root() {
     takeLatest(actions.REQUEST_USER_LIST, userSagas.getUserList),
     takeLatest(actions.REQUEST_USER_LOGIN, userSagas.doLogin),
     takeLatest(actions.REQUEST_USER_CREDENTIALS, userSagas.getUserCredentials),
-    takeLatest(actions.REQUEST_SAVE_CUSTOMER_PERSON, customerSagas.saveCustomerPerson)
+    takeLatest(actions.REQUEST_SAVE_CUSTOMER_PERSON, customerSagas.saveCustomerPerson),
+    takeLatest(actions.REQUEST_SAVE_CUSTOMER_COMPANY, customerSagas.saveCustomerCompany),
   ])
 }

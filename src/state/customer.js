@@ -28,7 +28,39 @@ const customerState = {
     success: false,
     list: [],
     credentials: {},
-    error_message: ''
+    error_message: '',
+    person: {
+        firstName: '',
+        lastName: '',
+        nickName: '',
+        birthDay: '',
+        birthMonth: '',
+        birthYear: '',
+        personalDocument: '',
+        socialSecurity: '',
+        email: '',
+        fixedPhonePrefix: '',
+        fixedPhoneNumber: '',
+        mobilePhonePrefix: '',
+        mobilePhoneNumber: '',
+        isActive: true
+    },
+    company: {
+        firstName: '',
+        lastName: '',
+        nickName: '',
+        birthDay: '',
+        birthMonth: '',
+        birthYear: '',
+        personalDocument: '',
+        socialSecurity: '',
+        email: '',
+        fixedPhonePrefix: '',
+        fixedPhoneNumber: '',
+        mobilePhonePrefix: '',
+        mobilePhoneNumber: '',
+        isActive: true
+    }
 }
 
 export default customerState

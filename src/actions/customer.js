@@ -8,3 +8,13 @@ export function requestSaveCustomerPerson(personData) {
     }
   }
 }
+
+export function requestSaveCustomerCompany(personData, companyData) {
+  return {
+    type: action.REQUEST_SAVE_CUSTOMER_COMPANY,
+    payload: {
+      personData,
+      companyData
+    }
+  }
+}

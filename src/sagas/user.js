@@ -8,7 +8,7 @@ export function* getUserCredentials() {
   const config = yield select(state => state.config)
   const user = yield select(state => state.user)
 
-  const listUrl = config.baseUrl+user.listAction
+  const listUrl = config.baseUrl+user.credentialsAction
 
   const credentialsData = {
     USER_LOGIN: localStorage.getItem('USER_LOGIN'),
@@ -58,13 +58,20 @@ export function* doLogin(action) {
       if (response.error === true) {
         yield put({ type: actions.FAILURE_NETWORK })
       } else {
-        yield put({ type: actions.FAILURE_USER_LOGIN, payload: { data: response.error_message } })
+        yield put({ type: actions.FAILURE_USER_LOGIN, payload: { data: response.data.error_message } })
+        yield put({ type: actions.FAILURE_USER_CREDENTIALS })
       }  
     } else {
-      yield put({ type: actions.SUCCESS_NETWORK })
-      localStorage.setItem('USER_LOGIN', response.USER_LOGIN)
-      localStorage.setItem('CSRF_TOKEN_VALUE', response.CSRF_TOKEN_VALUE)
-      yield put({ type: actions.SUCCESS_USER_LOGIN })
+
+      if ( response.error === false || response.data.AUTHORIZED === true ) {
+        yield put({ type: actions.SUCCESS_NETWORK })
+        localStorage.setItem('USER_LOGIN', response.data.USER_LOGIN)
+        localStorage.setItem('CSRF_TOKEN_VALUE', response.data.CSRF_TOKEN_VALUE)
+        yield put({ type: actions.SUCCESS_USER_LOGIN })
+      } else {
+        yield put({ type: actions.FAILURE_GENERIC })
+        yield put({ type: actions.SUCCESS_GENERIC })
+      }
     }
   } catch (err) {
     yield put({ type: actions.FAILURE_NETWORK })

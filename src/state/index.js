@@ -4,9 +4,11 @@ import dashboardState from './dashboard'
 
 const initialState = {
     config: {
-        baseUrl: 'http://192.168.1.5/flashphp/public/backend',
+        baseUrl: 'http://192.168.1.230:8888/flashphp/public/backend',
         networkError: false,
-        networkErrorMessage: 'Estamos com falhas na conexão, por favor avise seu administrador.'
+        networkErrorMessage: 'Estamos com falhas na conexão, por favor avise seu administrador.',
+        genericError: false,
+        genericErrorMessage: 'O sistema encontrou um erro, por favor avise seu administrador.',
     },
          
     user: userState,
