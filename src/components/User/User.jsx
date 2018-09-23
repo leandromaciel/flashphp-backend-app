@@ -10,6 +10,10 @@ class UserList extends Component {
     constructor(props) {
         super(props)
 
+        if (this.props.user.credentials.AUTHORIZED === false) {
+            this.props.history.push('/')
+        }
+
         this.getUserList()
 
         this.state = {

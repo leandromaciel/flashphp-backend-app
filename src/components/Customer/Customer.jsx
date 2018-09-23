@@ -15,6 +15,10 @@ class Customer extends Component {
     constructor(props) {
         super(props)
 
+        if (this.props.user.credentials.AUTHORIZED === false) {
+            this.props.history.push('/')
+        }
+
         this.state = {
             customerType: 'person',
             personChecked: true,
