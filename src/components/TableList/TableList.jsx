@@ -116,7 +116,6 @@ export default class TableList extends Component {
     render() {
 
         const { SearchBar } = Search
-        const columns = this.props.configData.csvHeader
 
         const selectRow = {
             mode: 'checkbox',
@@ -157,7 +156,7 @@ export default class TableList extends Component {
                 <ToolkitProvider
                     keyField='id'
                     data={ this.props.data }
-                    columns={ columns }
+                    columns={ this.props.columns }
                     search
                 >
                     {
@@ -175,7 +174,7 @@ export default class TableList extends Component {
                                 <BootstrapTable
                                     { ...props.baseProps }
                                     selectRow={ selectRow }
-                                    caption="Lista de Usuários"
+                                    caption={this.props.caption}
                                     noDataIndication="Carregando informações..."
                                     pagination={paginationFactory(options)}
                                 />

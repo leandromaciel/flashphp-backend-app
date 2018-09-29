@@ -10,5 +10,6 @@ export default function* root() {
     takeLatest(actions.REQUEST_USER_CREDENTIALS, userSagas.getUserCredentials),
     takeLatest(actions.REQUEST_SAVE_CUSTOMER_PERSON, customerSagas.saveCustomerPerson),
     takeLatest(actions.REQUEST_SAVE_CUSTOMER_COMPANY, customerSagas.saveCustomerCompany),
+    takeLatest(actions.REQUEST_SAVE_CUSTOMER, customerSagas.saveCustomer)
   ])
 }

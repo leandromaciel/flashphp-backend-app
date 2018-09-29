@@ -6,21 +6,22 @@ const customerState = {
     editCompanyAction: '/cliente/mostrar-cliente-empresa',
     exportCSVAction: '/cliente/exportar-csv',
     csvFileName: 'listagem-de-clientes',
+    listCaption: 'Listagem de Clientes',
     csvHeader: [{
-        dataField: 'id',
-        text: 'ID Usuario',
+        dataField: 'firstName',
+        text: 'Nome',
         sort: true
     }, {
-        dataField: 'login',
-        text: 'Login',
+        dataField: 'lastName',
+        text: 'Sobrenome',
         sort: true
     }, {
-        dataField: 'created_at',
-        text: 'Criado em',
+        dataField: 'nickName',
+        text: 'Apelido',
         sort: true
     }, {
-        dataField: 'updated_at',
-        text: 'atualizado em',
+        dataField: 'vatNumber',
+        text: 'CNPJ',
         sort: true
     }],
     loading: false,
@@ -30,6 +31,8 @@ const customerState = {
     credentials: {},
     error_message: '',
     person: {
+        personDataIsSet: false,
+        id: '',
         firstName: '',
         lastName: '',
         nickName: '',
@@ -43,23 +46,24 @@ const customerState = {
         fixedPhoneNumber: '',
         mobilePhonePrefix: '',
         mobilePhoneNumber: '',
-        isActive: true
+        isActive: false
     },
     company: {
-        firstName: '',
-        lastName: '',
-        nickName: '',
-        birthDay: '',
-        birthMonth: '',
-        birthYear: '',
-        personalDocument: '',
-        socialSecurity: '',
-        email: '',
-        fixedPhonePrefix: '',
-        fixedPhoneNumber: '',
-        mobilePhonePrefix: '',
-        mobilePhoneNumber: '',
-        isActive: true
+        companyDataIsSet: false,
+        id: '',
+        vatNumber: '',
+        additionalVatNumber: '',
+        taxRegiment: '',
+        companyFixedPhonePrefix: '',
+        companyFixedPhoneNumber: '',
+        companyMobilePhonePrefix: '',
+        companyMobilePhoneNumber: '',
+        internalCode: '',
+        companyEmail: '',
+        companyType: '',
+        companyCustomerType: '',
+        salesman: '',
+        isActive: false
     }
 }
 

@@ -21,17 +21,22 @@ class Person extends Component {
         const name = target.name
 
         this.setState({
-           [name]: value
+            personDataIsSet: true,
+            [name]: value
         })
-
-        localStorage.setItem('customerPerson', JSON.stringify(this.state))
     }
 
     render() {
+        if (this.state.personDataIsSet === true) {
+            if ( localStorage.getItem('customerCompany') === null ) {
+                localStorage.setItem('customerCompany', JSON.stringify(this.props.customer.company))
+            }
+            
+            localStorage.setItem('customerPerson', JSON.stringify(this.state))
+        }
         return (
             
             <Fragment>
-
                 <Row>
                     <div className="col-md-4 mb-3">
                         <label htmlFor="firstName" className="grey-text">Primeiro Nome</label>

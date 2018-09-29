@@ -16,6 +16,14 @@ export default function customer(state = initialState.customer, action) {
             return {...state, loading: false, error: false, success: action.payload.data }
         case actions.REQUEST_SAVE_CUSTOMER_COMPANY_FAILURE:
             return { ...state, loading: false, error: action.payload.data }
+
+        case actions.REQUEST_SAVE_CUSTOMER:
+            return { ...state, loading: true }
+        case actions.REQUEST_SAVE_CUSTOMER_SUCCESS:
+            return {...state, loading: false, error: false, success: action.payload.data }
+        case actions.REQUEST_SAVE_CUSTOMER_FAILURE:
+            return { ...state, loading: false, error: action.payload.data }
+
         
         default:
             return state;
